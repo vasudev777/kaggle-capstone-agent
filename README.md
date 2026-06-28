@@ -56,7 +56,7 @@ You will see output indicating that the server is running on `http://127.0.0.1:8
 ### Step 4: Open the App in Your Browser
 Open your browser and navigate to:
 ```
-http://127.0.0.1:8000/
+https://kaggle-capstone-agent.onrender.com/
 ```
 
 ### Step 5: Input Gemini API Key & Set Goal

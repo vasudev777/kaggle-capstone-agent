@@ -300,6 +300,7 @@ def export_pdf():
             pdf.multi_cell(pdf.epw, 5, f"Description: {clean_desc}")
             
             if t.get("resources"):
+                pdf.ln(1)  # Reset cursor X to left margin
                 pdf.set_font("helvetica", "I", 9)
                 res_list = []
                 for res in t["resources"]:

@@ -32,6 +32,7 @@ const progressPercentageText = document.getElementById("progress-percentage-text
 const progressRatio = document.getElementById("progress-ratio");
 const progressCircle = document.querySelector(".progress-ring__circle");
 const btnExport = document.getElementById("btn-export");
+const btnReset = document.getElementById("btn-reset");
 
 const listTodo = document.getElementById("list-todo");
 const listInProgress = document.getElementById("list-inprogress");
@@ -242,6 +243,23 @@ btnExport.addEventListener("click", () => {
   window.open("/api/export", "_blank");
 });
 
+// Reset Workspace / Start New Goal
+btnReset.addEventListener("click", async () => {
+  if (!confirm("Are you sure you want to reset your workspace and start a new goal?")) return;
+  showLoading("Resetting Workspace...", "Clearing active goals and roadmaps.");
+  try {
+    const res = await fetch("/api/reset", { method: "POST" });
+    if (res.ok) {
+      state = await res.json();
+      renderWorkspace();
+    }
+  } catch (err) {
+    console.error("Failed to reset workspace:", err);
+  } finally {
+    hideLoading();
+  }
+});
+
 // Loading helper functions
 function showLoading(title, desc) {
   loadingTitle.textContent = title;
@@ -260,6 +278,7 @@ function renderWorkspace() {
     goalWizardCard.style.display = "block";
     metricsCard.style.display = "none";
     btnExport.style.display = "none";
+    btnReset.style.display = "none";
     
     listTodo.innerHTML = "";
     listInProgress.innerHTML = "";
@@ -277,6 +296,7 @@ function renderWorkspace() {
   goalWizardCard.style.display = "none";
   metricsCard.style.display = "flex";
   btnExport.style.display = "inline-flex";
+  btnReset.style.display = "inline-flex";
   
   activeGoalTitle.textContent = state.goal;
   activeGoalDuration.textContent = `${state.duration_days}-Day Plan`;

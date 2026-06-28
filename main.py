@@ -156,6 +156,24 @@ def update_task_status(payload: TaskUpdatePayload):
     save_workspace_state(state)
     return state
 
+@app.post("/api/reset")
+def reset_workspace():
+    """Reset the workspace state back to default initial state."""
+    state = {
+        "goal": "",
+        "duration_days": 0,
+        "tasks": [],
+        "chat_history": [
+            {
+                "sender": "agent",
+                "text": "Hello! I am your AI Workspace Concierge. What is your goal or learning path? For example, tell me: 'I want to learn HTML & CSS basics in 3 days' or 'Build a basic FastAPI application in 2 days'!"
+            }
+        ]
+    }
+    save_workspace_state(state)
+    return state
+
+
 @app.get("/api/export")
 def export_plan():
     """Export the current workspace learning plan and progress as a beautiful Markdown report."""

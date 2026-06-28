@@ -727,6 +727,47 @@ textarea.form-input {
   color: var(--text-secondary);
 }
 
+/* Responsive Mobile & Tablet Styles */
+@media (max-width: 1024px) {
+  .workspace-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  
+  .app-container {
+    height: auto !important;
+    padding: 16px !important;
+  }
+  
+  .left-pane {
+    max-height: none !important;
+  }
+  
+  .chat-card {
+    min-height: 450px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .board-container {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  
+  .app-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  
+  .header-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
 /* Beautiful PDF Print Styles */
 @media print {
   body {

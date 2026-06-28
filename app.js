@@ -32,6 +32,7 @@ const progressPercentageText = document.getElementById("progress-percentage-text
 const progressRatio = document.getElementById("progress-ratio");
 const progressCircle = document.querySelector(".progress-ring__circle");
 const btnExport = document.getElementById("btn-export");
+const btnExportPdf = document.getElementById("btn-export-pdf");
 const btnReset = document.getElementById("btn-reset");
 
 const listTodo = document.getElementById("list-todo");
@@ -243,6 +244,11 @@ btnExport.addEventListener("click", () => {
   window.open("/api/export", "_blank");
 });
 
+// Export PDF using browser print
+btnExportPdf.addEventListener("click", () => {
+  window.print();
+});
+
 // Reset Workspace / Start New Goal
 btnReset.addEventListener("click", async () => {
   if (!confirm("Are you sure you want to reset your workspace and start a new goal?")) return;
@@ -278,6 +284,7 @@ function renderWorkspace() {
     goalWizardCard.style.display = "block";
     metricsCard.style.display = "none";
     btnExport.style.display = "none";
+    btnExportPdf.style.display = "none";
     btnReset.style.display = "none";
     
     listTodo.innerHTML = "";
@@ -296,6 +303,7 @@ function renderWorkspace() {
   goalWizardCard.style.display = "none";
   metricsCard.style.display = "flex";
   btnExport.style.display = "inline-flex";
+  btnExportPdf.style.display = "inline-flex";
   btnReset.style.display = "inline-flex";
   
   activeGoalTitle.textContent = state.goal;

@@ -726,3 +726,132 @@ textarea.form-input {
   font-size: 13px;
   color: var(--text-secondary);
 }
+
+/* Beautiful PDF Print Styles */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  .bg-glow, 
+  .left-pane, 
+  .app-header, 
+  .header-actions, 
+  .btn-card-action, 
+  .btn-help-ai,
+  #btn-reset, 
+  #btn-export, 
+  #btn-export-pdf, 
+  #btn-settings-toggle,
+  .task-actions {
+    display: none !important;
+  }
+  
+  .app-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+  }
+  
+  .workspace-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  
+  .right-pane {
+    gap: 20px !important;
+    display: block !important;
+  }
+  
+  .glass-card {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .days-badge {
+    background: #ccfbf1 !important;
+    color: #0f766e !important;
+    border: 1px solid #99f6e4 !important;
+  }
+  
+  .progress-ring__circle-bg {
+    stroke: #f1f5f9 !important;
+  }
+  
+  .progress-ring__circle {
+    stroke: #0d9488 !important;
+  }
+  
+  .progress-text, 
+  .progress-summary-text, 
+  .sub-label, 
+  #active-goal-title {
+    color: #0f172a !important;
+  }
+  
+  .board-container {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    display: grid !important;
+  }
+  
+  .board-column {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    height: auto !important;
+    min-height: 500px !important;
+  }
+  
+  .column-header {
+    border-bottom: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+  }
+  
+  .count-badge {
+    background: #e2e8f0 !important;
+    color: #475569 !important;
+  }
+  
+  .task-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    transform: none !important;
+    color: #0f172a !important;
+  }
+  
+  .task-title {
+    color: #0f172a !important;
+  }
+  
+  .task-desc {
+    color: #334155 !important;
+  }
+  
+  .day-tag {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+  
+  .task-resources {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+  
+  .resource-label {
+    color: #64748b !important;
+  }
+  
+  .resource-link {
+    color: #0284c7 !important;
+    text-decoration: underline !important;
+  }
+}
+

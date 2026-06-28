@@ -18,12 +18,12 @@ class Resource(BaseModel):
     type: str = Field(description="Type of resource: 'article' or 'video'")
 
 class TaskItem(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()[:8]), description="A unique short ID for the task")
+    id: str = Field(description="A unique short ID for the task")
     title: str = Field(description="A concise title of the task")
     description: str = Field(description="Details on what the user needs to build or learn")
     day: int = Field(description="The relative day number this task is scheduled for (e.g., 1, 2, 3)")
-    status: str = Field(default="todo", description="Status of the task. Must be 'todo'")
-    resources: List[Resource] = Field(default=[], description="List of 2-3 high-quality learning resources for this specific task")
+    status: str = Field(description="Status of the task. Must be 'todo'")
+    resources: List[Resource] = Field(description="List of 2-3 high-quality learning resources for this specific task")
 
 class LearningPlan(BaseModel):
     goal: str = Field(description="The cleaned up overarching goal description")

@@ -297,7 +297,7 @@ def export_pdf():
             
             clean_desc = t['description'].encode('ascii', 'ignore').decode('ascii')
             pdf.set_font("helvetica", "", 10)
-            pdf.multi_cell(0, 5, f"Description: {clean_desc}")
+            pdf.multi_cell(pdf.epw, 5, f"Description: {clean_desc}")
             
             if t.get("resources"):
                 pdf.set_font("helvetica", "I", 9)
@@ -306,7 +306,7 @@ def export_pdf():
                     res_title = res['title'].encode('ascii', 'ignore').decode('ascii')
                     res_list.append(f"{res_title}: {res['url']}")
                 resources_str = "Resources: " + " | ".join(res_list)
-                pdf.multi_cell(0, 5, resources_str)
+                pdf.multi_cell(pdf.epw, 5, resources_str)
                 
             pdf.ln(4)
             

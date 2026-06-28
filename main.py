@@ -37,6 +37,12 @@ class TaskUpdatePayload(BaseModel):
     task_id: str
     status: str
 
+class SyncPayload(BaseModel):
+    goal: str
+    duration_days: int
+    tasks: list
+    chat_history: list
+
 @app.get("/api/status")
 def get_status():
     """Check if the Gemini API Key is configured."""
@@ -171,6 +177,18 @@ def reset_workspace():
                 "text": "Hello! I am your AI Workspace Concierge. What is your goal or learning path? For example, tell me: 'I want to learn HTML & CSS basics in 3 days' or 'Build a basic FastAPI application in 2 days'!"
             }
         ]
+    }
+    save_workspace_state(state)
+    return state
+
+@app.post("/api/sync")
+def sync_state(payload: SyncPayload):
+    """Sync the frontend state to the backend."""
+    state = {
+        "goal": payload.goal,
+        "duration_days": payload.duration_days,
+        "tasks": payload.tasks,
+        "chat_history": payload.chat_history
     }
     save_workspace_state(state)
     return state

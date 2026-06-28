@@ -49,6 +49,24 @@ const loadingTitle = document.getElementById("loading-title");
 // SVG Circle circumference config (r=32 => 2 * pi * 32 = 201.06)
 const CIRCUMFERENCE = 201.06;
 
+// LocalStorage Sync Helpers
+function saveLocalState() {
+  localStorage.setItem("workspace_state", JSON.stringify(state));
+  syncWithServer();
+}
+
+async function syncWithServer() {
+  try {
+    await fetch("/api/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(state)
+    });
+  } catch (e) {
+    console.error("State sync failed:", e);
+  }
+}
+
 // Initial Load & Server Status Check
 async function init() {
   try {
@@ -65,8 +83,15 @@ async function init() {
       settingsPanel.style.display = "none";
     }
     
-    // Load existing workspace
-    await fetchWorkspace();
+    // Load local storage first (for persistence across server resets)
+    const savedLocal = localStorage.getItem("workspace_state");
+    if (savedLocal) {
+      state = JSON.parse(savedLocal);
+      renderWorkspace();
+      syncWithServer(); // Backup to server session cache
+    } else {
+      await fetchWorkspace();
+    }
   } catch (err) {
     console.error("Initialization failed:", err);
   }
@@ -161,6 +186,7 @@ btnGeneratePlan.addEventListener("click", async () => {
     const data = await res.json();
     if (res.ok) {
       state = data;
+      saveLocalState();
       renderWorkspace();
     } else {
       wizardError.textContent = `Error: ${data.detail}`;
@@ -183,6 +209,7 @@ async function updateTask(taskId, newStatus) {
     
     if (res.ok) {
       state = await res.json();
+      saveLocalState();
       renderWorkspace();
     }
   } catch (err) {
@@ -202,6 +229,7 @@ async function sendMessage() {
   
   // Update state locally for instant user message display
   state.chat_history.push({ sender: "user", text: text });
+  saveLocalState();
   chatUserInput.value = "";
   renderChat();
   
@@ -222,6 +250,7 @@ async function sendMessage() {
     const data = await res.json();
     if (res.ok) {
       state.chat_history = data.chat_history;
+      saveLocalState();
       renderChat();
     } else {
       // Remove typing bubble and show error
@@ -257,6 +286,7 @@ btnReset.addEventListener("click", async () => {
     const res = await fetch("/api/reset", { method: "POST" });
     if (res.ok) {
       state = await res.json();
+      localStorage.removeItem("workspace_state");
       renderWorkspace();
     }
   } catch (err) {

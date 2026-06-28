@@ -244,9 +244,9 @@ btnExport.addEventListener("click", () => {
   window.open("/api/export", "_blank");
 });
 
-// Export PDF using browser print
+// Export PDF by opening backend API endpoint (triggers direct download)
 btnExportPdf.addEventListener("click", () => {
-  window.print();
+  window.open("/api/export_pdf", "_blank");
 });
 
 // Reset Workspace / Start New Goal

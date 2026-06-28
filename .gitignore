@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+
+# Local databases/state (optional, but keep default in git if desired)
+# If you want to keep the default state file in git, uncomment the line below:
+# workspace_state.json

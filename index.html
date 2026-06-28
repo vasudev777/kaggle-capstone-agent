@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart AI Planner & Workspace Concierge</title>
+  <!-- Google Fonts: Inter and Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Background decorations -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <h1>Workspace Concierge</h1>
+          <span class="badge">Vibe Coding Agent</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-export" class="btn btn-secondary" style="display: none;">
+          📥 Export Roadmap (.md)
+        </button>
+        <button id="btn-settings-toggle" class="btn btn-icon" title="API Configuration">
+          ⚙️ Key Setup
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="workspace-grid">
+      
+      <!-- LEFT COLUMN: Input, Goal Setup & Chat -->
+      <section class="left-pane">
+        
+        <!-- API Setup Panel (Collapsible/Dynamic) -->
+        <div id="settings-panel" class="glass-card settings-card">
+          <h3>🔑 Gemini API Key Configuration</h3>
+          <p class="description-text">Enter your Google Gemini API Key. It will be stored locally in your workspace `.env` file.</p>
+          <div class="input-group">
+            <input type="password" id="api-key-input" placeholder="AIzaSy..." class="form-input">
+            <button id="btn-save-key" class="btn btn-primary">Save Key</button>
+          </div>
+          <p id="key-status-text" class="status-msg error"></p>
+        </div>
+
+        <!-- Goal Wizard (If no active goal) -->
+        <div id="goal-wizard-card" class="glass-card goal-card">
+          <h2>🎯 Start A New Roadmap</h2>
+          <p class="section-desc">Describe what you want to learn or build, specify the duration, and let the multi-agent system structure it for you.</p>
+          
+          <div class="form-group">
+            <label for="goal-input">What is your learning or project goal?</label>
+            <textarea id="goal-input" placeholder="e.g. Learn the basics of Python programming and write 3 basic scripts..." class="form-input" rows="3"></textarea>
+          </div>
+
+          <div class="form-group row">
+            <div class="col">
+              <label for="duration-input">Plan Duration (Days)</label>
+              <input type="number" id="duration-input" min="1" max="30" value="5" class="form-input">
+            </div>
+            <div class="col flex-end">
+              <button id="btn-generate-plan" class="btn btn-primary btn-full">
+                🚀 Generate Agentic Plan
+              </button>
+            </div>
+          </div>
+          <p id="wizard-error" class="status-msg error"></p>
+        </div>
+
+        <!-- Agent Interactive Chat Assistant -->
+        <div class="glass-card chat-card flex-grow">
+          <div class="chat-header">
+            <h3>💬 Interactive Workspace Coach</h3>
+            <span class="status-indicator online">Agent Online</span>
+          </div>
+          <div class="chat-messages" id="chat-messages-box">
+            <!-- Messages render here -->
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-user-input" placeholder="Ask the agent for help with a task or general advice..." class="form-input">
+            <button id="btn-send-message" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN: Kanban Board & Metrics -->
+      <section class="right-pane">
+        
+        <!-- Metrics Bar (Visible when goal exists) -->
+        <div id="metrics-card" class="glass-card metrics-card" style="display: none;">
+          <div class="metrics-info">
+            <span class="sub-label">Current Workspace Goal</span>
+            <h2 id="active-goal-title">Goal Title Here</h2>
+            <p id="active-goal-duration" class="days-badge">0-Day Plan</p>
+          </div>
+          <div class="metrics-visual">
+            <div class="progress-ring-container">
+              <svg class="progress-ring" width="80" height="80">
+                <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="transparent" r="32" cx="40" cy="40"/>
+                <circle class="progress-ring__circle" stroke="var(--accent-teal)" stroke-width="6" stroke-linecap="round" fill="transparent" r="32" cx="40" cy="40" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+              </svg>
+              <div class="progress-text" id="progress-percentage-text">0%</div>
+            </div>
+            <div class="progress-labels">
+              <span class="progress-summary-text" id="progress-ratio">0 of 0 tasks completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kanban Task Board -->
+        <div class="board-container">
+          
+          <!-- Column 1: TODO -->
+          <div class="board-column" id="col-todo">
+            <div class="column-header">
+              <span class="col-icon">📝</span>
+              <h3>To-Do</h3>
+              <span class="count-badge" id="count-todo">0</span>
+            </div>
+            <div class="task-list" id="list-todo">
+              <!-- Task cards -->
+            </div>
+          </div>
+
+          <!-- Column 2: IN PROGRESS -->
+          <div class="board-column" id="col-in-progress">
+            <div class="column-header">
+              <span class="col-icon">🔄</span>
+              <h3>In Progress</h3>
+              <span class="count-badge" id="count-inprogress">0</span>
+            </div>
+            <div class="task-list" id="list-inprogress">
+              <!-- Task cards -->
+            </div>
+          </div>
+
+          <!-- Column 3: COMPLETED -->
+          <div class="board-column" id="col-completed">
+            <div class="column-header">
+              <span class="col-icon">✅</span>
+              <h3>Completed</h3>
+              <span class="count-badge" id="count-completed">0</span>
+            </div>
+            <div class="task-list" id="list-completed">
+              <!-- Task cards -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="overlay" style="display: none;">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <h3 id="loading-title">Planning Agent At Work...</h3>
+      <p id="loading-desc">Analyzing goal, dividing sub-tasks, and fetching resources.</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/app.js"></script>
+</body>
+</html>

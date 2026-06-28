@@ -1,0 +1,11 @@
+{
+  "goal": "",
+  "duration_days": 0,
+  "tasks": [],
+  "chat_history": [
+    {
+      "sender": "agent",
+      "text": "Hello! I am your AI Workspace Concierge. What is your goal or learning path? For example, tell me: 'I want to learn HTML & CSS basics in 3 days' or 'Build a basic FastAPI application in 2 days'!"
+    }
+  ]
+}
